@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'package:synclass_app/router/router.dart';
 import 'package:synclass_app/screens/screens.dart';
+import 'package:synclass_app/theme/theme.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,10 +11,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SynClass App',
-      home: LoginScreen(),
+      home: const LoginScreen(),
+      routes: routes,
+      theme: theme
     );
   }
 }

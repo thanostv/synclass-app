@@ -1,38 +1,62 @@
 import 'package:flutter/material.dart';
 
+import 'package:synclass_app/widgets/widgets.dart';
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            height: 220,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/SynClass_BlackLogo.png'),
-                fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Logo
+            Container(
+              width: double.infinity,
+              height: 220,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/SynClass_BlackLogo.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Text(
-            'Iniciar sesión',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+
+            const SizedBox(height: 20),
+
+            // Título Iniciar sesión
+            const Text(
+              'Iniciar sesión',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const LoginForm(),
-        ],
+
+            const SizedBox(height: 20),
+
+            // Formulario
+            const LoginForm(),
+
+            const SizedBox(height: 10),
+
+            // No tengo cuenta
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, 'register'),
+                child: const Text(
+                  'No tengo cuenta',
+                  style: TextStyle(
+                    color: Color(0xff0A14FC)
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -45,66 +69,55 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 40,
-        vertical: 20,
-      ),
-      decoration: BoxDecoration(
-        color: const Color(0xffD9D9D9),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Form(
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color(0xffF5F0F0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
-                    ),
-                    hintText: 'Correo',
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color(0xffF5F0F0),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
-                    ),
-                    hintText: 'Contraseña',
-                  ),
-                ),
-              ],
+    return FormContainerWidget(
+      children: [
+        TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          decoration: const InputDecoration(
+            hintText: 'Correo',
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        TextFormField(
+          obscureText: true,
+          decoration: const InputDecoration(
+            hintText: 'Contraseña',
+          ),
+        ),
+    
+        const SizedBox(height: 10),
+    
+        SizedBox(
+          width: double.infinity,
+          child: GestureDetector(
+            onTap: () {
+              
+            },
+            child: const Text(
+              'Olvidé mi contraseña',
+              style: TextStyle(
+                color: Color(0xff0A14FC)
+              ),
+              textAlign: TextAlign.end
             ),
           ),
-          const SizedBox(
-            height: 20,
+        ),
+    
+        const SizedBox(height: 20),
+    
+        ElevatedButton(
+          onPressed: () {},
+          style: const ButtonStyle(
+            elevation: MaterialStatePropertyAll(5),
+            side: MaterialStatePropertyAll(
+              BorderSide(color: Colors.black)
+            )
           ),
-          ElevatedButton(
-            onPressed: () {},
-            child: const Text('Comenzar'),
-          ),
-        ],
-      ),
+          child: const Text('Comenzar'),
+        ),
+      ],
     );
   }
 }
