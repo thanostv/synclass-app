@@ -72,7 +72,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Checkbox(value: checked, onChanged: (value) {}),
+                    Checkbox(value: checked, onChanged: (value) {
+                      checked = !checked;
+                      setState(() {});
+                    }),
                     const Text(
                       'Acepto términos y condiciones',
                       style: TextStyle(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
@@ -50,8 +52,8 @@ class _MagicCodeScreenState extends State<MagicCodeScreen> {
     return KeyboardListener(
       focusNode: FocusNode(),
       onKeyEvent: (value) {
-        if(value is KeyDownEvent) {
-          if(value.logicalKey.keyLabel == 'Backspace') {
+        if(Platform.isAndroid) {
+          if(value is KeyDownEvent && value.logicalKey.keyLabel == 'Backspace') {
             FocusScope.of(context).previousFocus();
           }
         }
@@ -91,10 +93,10 @@ class _MagicCodeScreenState extends State<MagicCodeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CodeWidget(textCtrl: firstCtrl),
-                      CodeWidget(textCtrl: secondCtrl),
-                      CodeWidget(textCtrl: thirdCtrl),
-                      CodeWidget(textCtrl: fourthCtrl),
+                      _CodeWidget(textCtrl: firstCtrl),
+                      _CodeWidget(textCtrl: secondCtrl),
+                      _CodeWidget(textCtrl: thirdCtrl),
+                      _CodeWidget(textCtrl: fourthCtrl),
                     ],
                   ),
                 ),
@@ -128,10 +130,12 @@ class _MagicCodeScreenState extends State<MagicCodeScreen> {
   }
 }
 
-class CodeWidget extends StatelessWidget {
+
+
+class _CodeWidget extends StatelessWidget {
   final TextEditingController textCtrl;
   
-  const CodeWidget({super.key, required this.textCtrl});
+  const _CodeWidget({required this.textCtrl});
 
   @override
   Widget build(BuildContext context) {
@@ -152,6 +156,10 @@ class CodeWidget extends StatelessWidget {
           if(value.isNotEmpty) {
             textCtrl.text = value.characters.last;
             FocusScope.of(context).nextFocus();
+          }
+
+          if(Platform.isIOS && value.isEmpty) {
+            FocusScope.of(context).previousFocus();
           }
         },
       ),
