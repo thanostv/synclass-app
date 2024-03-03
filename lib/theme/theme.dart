@@ -13,6 +13,7 @@ final theme = ThemeData(
   appBarTheme: const AppBarTheme(
     backgroundColor: Color(0xff5271FF),
     iconTheme: IconThemeData(color: Colors.white),
+    foregroundColor: Colors.white
   ),
   inputDecorationTheme: InputDecorationTheme(
     filled: true,

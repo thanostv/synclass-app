@@ -86,7 +86,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 20),
 
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(context, 'section', (route) => false);
+                },
                 style: const ButtonStyle(
                   elevation: MaterialStatePropertyAll(0),
                 ),
