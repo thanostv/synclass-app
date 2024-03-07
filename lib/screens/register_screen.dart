@@ -59,43 +59,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: 'Contraseña',
                     ),
                   ),
-                ],
-              ),
 
-              const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-              GestureDetector(
-                onTap: () {
-                  checked = !checked;
-                  setState(() {});
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Checkbox(value: checked, onChanged: (value) {
+                  GestureDetector(
+                    onTap: () {
                       checked = !checked;
                       setState(() {});
-                    }),
-                    const Text(
-                      'Acepto términos y condiciones',
-                      style: TextStyle(
-                        color: Color(0xff0A14FC)
-                      ),
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Checkbox(value: checked, onChanged: (value) {
+                          checked = !checked;
+                          setState(() {});
+                        }),
+                        const Text(
+                          'Acepto términos y condiciones',
+                          style: TextStyle(
+                            color: Color(0xff0A14FC)
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
+                  ),
 
-              const SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(context, 'section', (route) => false);
-                },
-                style: const ButtonStyle(
-                  elevation: MaterialStatePropertyAll(0),
-                ),
-                child: const Text('Continuar'),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'section');
+                      // Navigator.pushNamedAndRemoveUntil(context, 'section', (route) => false);
+                    },
+                    style: const ButtonStyle(
+                      elevation: MaterialStatePropertyAll(0),
+                    ),
+                    child: const Text('Continuar'),
+                  ),
+                ],
               ),
             ],
           ),

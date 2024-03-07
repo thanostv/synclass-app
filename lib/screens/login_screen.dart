@@ -109,7 +109,8 @@ class LoginForm extends StatelessWidget {
     
         ElevatedButton(
           onPressed: () {
-            Navigator.pushNamedAndRemoveUntil(context, 'section', (route) => false);
+            Navigator.pushNamed(context, 'dashboard');
+            // Navigator.pushNamedAndRemoveUntil(context, 'section', (route) => false);
           },
           style: const ButtonStyle(
             elevation: MaterialStatePropertyAll(5),

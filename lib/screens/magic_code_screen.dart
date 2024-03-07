@@ -114,7 +114,8 @@ class _MagicCodeScreenState extends State<MagicCodeScreen> {
       
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(context, 'dashboard', (route) => false);
+                    Navigator.pushNamed(context, 'dashboard');
+                    // Navigator.pushNamedAndRemoveUntil(context, 'dashboard', (route) => false);
                   },
                   style: const ButtonStyle(
                     elevation: MaterialStatePropertyAll(0),
