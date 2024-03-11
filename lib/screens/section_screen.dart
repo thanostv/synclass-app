@@ -30,7 +30,9 @@ class SectionScreen extends StatelessWidget {
             SizedBox(
               width: 140,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'group'); 
+                },
                 style: const ButtonStyle(
                   elevation: MaterialStatePropertyAll(0),
                 ),

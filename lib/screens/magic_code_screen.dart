@@ -93,20 +93,23 @@ class _MagicCodeScreenState extends State<MagicCodeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _CodeWidget(textCtrl: firstCtrl),
-                      _CodeWidget(textCtrl: secondCtrl),
-                      _CodeWidget(textCtrl: thirdCtrl),
-                      _CodeWidget(textCtrl: fourthCtrl),
+                      CodeWidget(textCtrl: firstCtrl),
+                      CodeWidget(textCtrl: secondCtrl),
+                      CodeWidget(textCtrl: thirdCtrl),
+                      CodeWidget(textCtrl: fourthCtrl),
                     ],
                   ),
                 ),
       
                 const SizedBox(height: 30),
       
-                const Text(
-                  'No tengo código mágico',
-                  style: TextStyle(
-                    color: Color(0xff0A14FC)
+                GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, 'dashboard'),
+                  child: const Text(
+                    'No tengo código mágico',
+                    style: TextStyle(
+                      color: Color(0xff0A14FC)
+                    ),
                   ),
                 ),
       
@@ -133,10 +136,15 @@ class _MagicCodeScreenState extends State<MagicCodeScreen> {
 
 
 
-class _CodeWidget extends StatelessWidget {
+class CodeWidget extends StatelessWidget {
   final TextEditingController textCtrl;
+  final bool? readOnly;
   
-  const _CodeWidget({required this.textCtrl});
+  const CodeWidget({
+    super.key, 
+    required this.textCtrl,
+    bool? readOnly
+  }): readOnly = readOnly ?? false ;
 
   @override
   Widget build(BuildContext context) {
@@ -146,6 +154,7 @@ class _CodeWidget extends StatelessWidget {
       child: TextField(
         minLines: null,
         maxLines: null,
+        readOnly: readOnly!,
         textAlign: TextAlign.center,
         keyboardType: TextInputType.number,
         inputFormatters: [
