@@ -104,7 +104,7 @@ class _MagicCodeScreenState extends State<MagicCodeScreen> {
                 const SizedBox(height: 30),
       
                 GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, 'dashboard'),
+                  onTap: () => Navigator.pushNamed(context, 'tabs'),
                   child: const Text(
                     'No tengo código mágico',
                     style: TextStyle(
@@ -117,7 +117,7 @@ class _MagicCodeScreenState extends State<MagicCodeScreen> {
       
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, 'dashboard');
+                    Navigator.pushNamed(context, 'tabs');
                     // Navigator.pushNamedAndRemoveUntil(context, 'dashboard', (route) => false);
                   },
                   style: const ButtonStyle(
