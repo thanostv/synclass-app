@@ -15,4 +15,5 @@ final Map<String, Widget Function(BuildContext)> routes = {
   'agenda': (context) => const AgendaScreen(),
   'alerts': (context) => const AlertsScreen(),
   'config': (context) => const ConfigurationScreen(),
+  'attendance-list': (context) => const AttendanceListScreen(),
 };

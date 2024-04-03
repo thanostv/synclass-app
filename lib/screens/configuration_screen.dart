@@ -7,7 +7,7 @@ class ConfigurationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Alertas'),
+        title: const Text('Configuración'),
         centerTitle: true,
       ),
       body: SafeArea(

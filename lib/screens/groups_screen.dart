@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:synclass_app/screens/attendance_list_screen.dart';
 
 class GroupsScreen extends StatelessWidget {
   const GroupsScreen({super.key});
@@ -58,10 +60,10 @@ class GroupsScreen extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20)
                         ),
-                        child: const Row(
+                        child:  Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
+                            const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -84,9 +86,18 @@ class GroupsScreen extends StatelessWidget {
 
                             Row(
                               children: [
-                                Icon(Icons.list_alt_outlined),
-                                SizedBox(width: 12),
-                                Icon(Icons.edit),
+                                IconButton(
+                                  onPressed: () {
+                                    PersistentNavBarNavigator.pushNewScreen(
+                                        context,
+                                        screen: const AttendanceListScreen(),
+                                        pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                                    );
+                                  },
+                                  icon: const Icon(Icons.list_alt_outlined),
+                                ),
+                                const SizedBox(width: 12),
+                                const Icon(Icons.edit),
                               ],
                             )
                           ],
