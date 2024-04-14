@@ -4,9 +4,9 @@ class FormContainerWidget extends StatelessWidget {
 
   final List<Widget> children;
 
-  // TODO: Agregar state del formulario
+  final GlobalKey<FormState>? formKey;
 
-  const FormContainerWidget({super.key, required this.children});
+  const FormContainerWidget({super.key, required this.children, this.formKey});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,7 @@ class FormContainerWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Form(
+        key: formKey,
         child: Column(children: children)
       ),
     );

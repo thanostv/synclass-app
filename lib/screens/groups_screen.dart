@@ -189,6 +189,7 @@ class GroupsScreen extends StatelessWidget {
         )
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'groups',
         onPressed: () {
 
         },

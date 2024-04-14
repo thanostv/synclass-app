@@ -150,6 +150,7 @@ class _AgendaScreenState extends State<AgendaScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'agenda',
         onPressed: () {
 
         },

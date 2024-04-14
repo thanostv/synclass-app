@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
+import 'package:synclass_app/providers/login_provider.dart';
 import 'package:synclass_app/router/router.dart';
 import 'package:synclass_app/screens/screens.dart';
 import 'package:synclass_app/theme/theme.dart';
@@ -11,12 +14,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'SynClass App',
-      home: const LoginScreen(),
-      routes: routes,
-      theme: theme
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LoginProvider())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'SynClass App',
+        home: const LoginScreen(),
+        routes: routes,
+        theme: theme
+      ),
     );
   }
 }

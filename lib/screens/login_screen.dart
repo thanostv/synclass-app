@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:synclass_app/providers/login_provider.dart';
 
 import 'package:synclass_app/widgets/widgets.dart';
 
@@ -69,22 +71,51 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context);
+
     return FormContainerWidget(
+      formKey: loginProvider.formKey,
       children: [
         TextFormField(
+          controller: loginProvider.emailTextCtrl,
           keyboardType: TextInputType.emailAddress,
           decoration: const InputDecoration(
             hintText: 'Correo',
           ),
+          validator: (value) {
+            final email = value?.trim().toLowerCase() ?? '';
+
+            if (value == null || value.isEmpty) {
+              return 'El campo Correo es obligatorio';
+            }
+
+            final bool emailValid = RegExp(
+                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                .hasMatch(email);
+
+            if (!emailValid) {
+              return 'El correo es inválido';
+            }
+
+            return null;
+          },
         ),
         const SizedBox(
           height: 20,
         ),
         TextFormField(
+          controller: loginProvider.passwordTextCtrl,
           obscureText: true,
           decoration: const InputDecoration(
             hintText: 'Contraseña',
           ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'El campo Contraseña es obligatorio';
+            }
+
+            return null;
+          },
         ),
     
         const SizedBox(height: 10),
@@ -108,8 +139,24 @@ class LoginForm extends StatelessWidget {
         const SizedBox(height: 20),
     
         ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, 'tabs');
+          onPressed: () async {
+            if(loginProvider.validateLogin() ) {
+              final loginResponse = await loginProvider.login();
+
+              if(context.mounted) {
+                if(loginResponse['status'] == true) {
+                  Navigator.pushNamed(context, 'tabs');
+
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('!Bienvenido!'),
+                  ));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(loginResponse['message']),
+                  ));
+                }
+              }
+            }
             // Navigator.pushNamedAndRemoveUntil(context, 'section', (route) => false);
           },
           style: const ButtonStyle(

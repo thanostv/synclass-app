@@ -32,7 +32,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  http: ^1.2.0
   persistent_bottom_nav_bar: ^5.0.2
+  provider: ^6.1.2
   table_calendar: ^3.1.1
 
 dev_dependencies:

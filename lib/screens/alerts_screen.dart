@@ -130,6 +130,7 @@ class AlertsScreen extends StatelessWidget {
         )
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'alerts',
         onPressed: () {
 
         },
