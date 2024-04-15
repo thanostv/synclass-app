@@ -140,12 +140,12 @@ class LoginForm extends StatelessWidget {
     
         ElevatedButton(
           onPressed: () async {
-            if(loginProvider.validateLogin() ) {
+            if(loginProvider.validateLogin()) {
               final loginResponse = await loginProvider.login();
 
               if(context.mounted) {
                 if(loginResponse['status'] == true) {
-                  Navigator.pushNamed(context, 'tabs');
+                  Navigator.pushReplacementNamed(context, 'tabs');
 
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('!Bienvenido!'),
@@ -157,7 +157,6 @@ class LoginForm extends StatelessWidget {
                 }
               }
             }
-            // Navigator.pushNamedAndRemoveUntil(context, 'section', (route) => false);
           },
           style: const ButtonStyle(
             elevation: MaterialStatePropertyAll(5),

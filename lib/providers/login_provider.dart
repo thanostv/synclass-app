@@ -20,4 +20,10 @@ class LoginProvider extends ChangeNotifier {
 
     return response;
   }
+
+   Future<Map<String, dynamic>> logout() async {
+    final response = await authService.logout();
+
+    return response;
+  }
 }

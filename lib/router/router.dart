@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:synclass_app/screens/screens.dart';
 
 final Map<String, Widget Function(BuildContext)> routes = {
+  'login': (_) => const LoginScreen(),
   'register': (context) => const RegisterScreen(),
   'section': (context) => const SectionScreen(),
   'magic-code': (context) => const MagicCodeScreen(),
@@ -16,4 +17,5 @@ final Map<String, Widget Function(BuildContext)> routes = {
   'alerts': (context) => const AlertsScreen(),
   'config': (context) => const ConfigurationScreen(),
   'attendance-list': (context) => const AttendanceListScreen(),
+  'check-auth': (_) => const CheckAuthScreen(),
 };

@@ -32,6 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^9.0.0
   http: ^1.2.0
   persistent_bottom_nav_bar: ^5.0.2
   provider: ^6.1.2

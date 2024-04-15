@@ -7,6 +7,8 @@ class User {
     final dynamic emailVerifiedAt;
     final int roleId;
     final String? token;
+    final int? teacherId;
+    final int? parentId;
 
     User({
         required this.id,
@@ -15,6 +17,8 @@ class User {
         this.emailVerifiedAt,
         required this.roleId,
         this.token,
+        this.teacherId,
+        this.parentId,
     });
 
     factory User.fromJson(String str) => User.fromMap(json.decode(str));
@@ -28,6 +32,8 @@ class User {
         emailVerifiedAt: json["email_verified_at"],
         roleId: json["role_id"],
         token: json["token"],
+        teacherId: json["teacher_id"],
+        parentId: json["parent_id"],
     );
 
     Map<String, dynamic> toMap() => {
@@ -37,5 +43,7 @@ class User {
         "email_verified_at": emailVerifiedAt,
         "role_id": roleId,
         "token": token,
+        "teacher_id": teacherId,
+        "parent_id": parentId,
     };
 }
