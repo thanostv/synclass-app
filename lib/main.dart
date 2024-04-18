@@ -18,11 +18,12 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LoginProvider()),
         ChangeNotifierProvider(create: (_) => RegisterProvider()),
+        ChangeNotifierProvider(create: (_) => GroupProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'SynClass App',
-        home: const CheckAuthScreen(),
+        home: const GroupScreen(),
         routes: routes,
         theme: theme
       ),
