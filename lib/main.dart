@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'SynClass App',
-        home: const GroupScreen(),
+        home: const CheckAuthScreen(),
         routes: routes,
         theme: theme
       ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
+import 'package:synclass_app/providers/providers.dart';
 import 'package:synclass_app/widgets/widgets.dart';
 
 class GroupScreen extends StatefulWidget {
@@ -15,17 +18,18 @@ class _GroupScreenState extends State<GroupScreen> {
 
   DateTime selectedDate = DateTime.now();
 
-  Future<String?> _selectDate(BuildContext context) async {
+  Future<List<dynamic>?> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101)
+    );
 
     if(picked != null && picked != selectedDate) {
       final date = '${picked.day}/${picked.month}/${picked.year}';
 
-      return date;
+      return [date, picked];
     }
 
     return null;
@@ -47,8 +51,11 @@ class _GroupScreenState extends State<GroupScreen> {
 
   final List<int> _selectedDays = [];
 
+
   @override
   Widget build(BuildContext context) {
+  final groupProvider = Provider.of<GroupProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
@@ -73,11 +80,20 @@ class _GroupScreenState extends State<GroupScreen> {
                 const SizedBox(height: 20),
 
                 FormContainerWidget(
+                  formKey: groupProvider.groupformKey,
                   children: [
                     TextFormField(
+                      controller: groupProvider.groupNameTextCtrl,
                       decoration: const InputDecoration(
                         hintText: 'Nombre del grupo',
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'El campo Nombre del grupo es obligatorio';
+                        }
+
+                        return null;
+                      },
                     ),
 
                     const SizedBox(height: 20),
@@ -93,11 +109,21 @@ class _GroupScreenState extends State<GroupScreen> {
                             onTap: () async {
                               final date = await _selectDate(context);
 
-                              if(date != null) startDate.text = date;
+                              if(date != null) {
+                                startDate.text = date[0];
+                                groupProvider.initialDate = date[1];
+                              }
                             },
                             decoration: const InputDecoration(
                               hintText: 'Comienza',
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Obligatorio';
+                              }
+
+                              return null;
+                            },
                           ),
                         ),
 
@@ -111,61 +137,121 @@ class _GroupScreenState extends State<GroupScreen> {
                             onTap: () async {
                               final date = await _selectDate(context);
 
-                              if(date != null) endDate.text = date;
+                              if(date != null) {
+                                endDate.text = date[0];
+                                groupProvider.finalDate = date[1];
+                              }
                             },
                             decoration: const InputDecoration(
                               hintText: 'Finaliza',
                             ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Obligatorio';
+                              }
+
+                              return null;
+                            },
                           ),
                         ),
                       ],
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: days.map((key, value) => MapEntry(key, GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              actives[key] = !actives[key];
-
-                              if(actives[key]) {
-                                _selectedDays.add(key);
-                              } else {
-                                _selectedDays.remove(key);
-                              }
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration:  BoxDecoration(
-                              color: actives[key]
-                                ? const Color(0xff585151).withOpacity(.53)
-                                : null,
-                              shape: BoxShape.circle
+                    FormField<List<int>?>(
+                      initialValue: groupProvider.selectedDays,
+                      builder: (FormFieldState<List<int>?> state) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: days.map((key, value) => MapEntry(key, GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      actives[key] = !actives[key];
+                            
+                                      if(actives[key]) {
+                                        groupProvider.selectedDays.add(key);
+                                      } else {
+                                        groupProvider.selectedDays.remove(key);
+                                      }
+                            
+                                      state.didChange(groupProvider.selectedDays);
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration:  BoxDecoration(
+                                      color: actives[key]
+                                        ? const Color(0xff585151).withOpacity(.53)
+                                        : null,
+                                      shape: BoxShape.circle
+                                    ),
+                                    child: Text(value)
+                                  ),
+                                )))
+                                .values
+                                .toList(),
                             ),
-                            child: Text(value)
-                          ),
-                        )))
-                        .values
-                        .toList(),
+                            Builder(
+                              builder: (BuildContext context) => Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: state.errorText != null
+                                  ? Text(
+                                      state.errorText ?? "",
+                                      style: TextStyle(color: Theme.of(context).colorScheme.error, fontSize: 12),
+                                      textAlign: TextAlign.start,
+                                    )
+                                  : null
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Debes seleccionar al menos un día';
+                        }
+
+                        return null;
+                      },
                     ),
 
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
 
                     TextFormField(
+                      controller: groupProvider.alumnsNumberTextCtrl,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         hintText: 'Número de alumnos',
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'El campo Número de alumnos es obligatorio';
+                        }
+
+                        return null;
+                      },
+                      onChanged: (value) {
+                        if(value != '') {
+                          groupProvider.editingControllerList = List.generate(
+                            int.parse(value),
+                            (i) => TextEditingController()
+                          );
+                        }
+                      },
                     ),
 
                     const SizedBox(height: 20),
 
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, 'alumns');
+                        if(groupProvider.validateGroup()) {  
+                          Navigator.pushNamed(context, 'alumns');
+                        }
+                        // Navigator.pushNamed(context, 'alumns');
                         // Navigator.pushNamedAndRemoveUntil(context, 'alumns', (route) => false);
                       },
                       style: const ButtonStyle(
@@ -182,21 +268,3 @@ class _GroupScreenState extends State<GroupScreen> {
    );
   }
 }
-
-                        // ...days.mapIndexed((index, element) => GestureDetector(
-                        //   onTap: () {
-                        //     setState(() {
-                        //       actives[index] = !actives[index];
-                        //     });
-                        //   },
-                        //   child: Container(
-                        //     padding: const EdgeInsets.all(8),
-                        //     decoration:  BoxDecoration(
-                        //       color: actives[index]
-                        //         ? const Color(0xff585151).withOpacity(.53)
-                        //         : null,
-                        //       shape: BoxShape.circle
-                        //     ),
-                        //     child: Text(element)
-                        //   ),
-                        // ))

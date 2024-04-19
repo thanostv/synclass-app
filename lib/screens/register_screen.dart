@@ -177,9 +177,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         }
                       }
-
-                      // Navigator.pushNamed(context, 'section');
-                      // 
                     },
                     style: const ButtonStyle(
                       elevation: MaterialStatePropertyAll(0),

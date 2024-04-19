@@ -148,6 +148,8 @@ class _ConfigurationScreenState extends State<ConfigurationScreen> {
                                       onPressed: () {
                                         loginProvider.logout();
 
+                                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
                                         if(context.mounted) Navigator.of(context, rootNavigator: true).pushReplacementNamed('login');
                                       },
                                       child: const Text(

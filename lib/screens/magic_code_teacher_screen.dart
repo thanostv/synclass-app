@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:synclass_app/screens/screens.dart';
 
+import 'package:provider/provider.dart';
+
+import 'package:synclass_app/providers/providers.dart';
+import 'package:synclass_app/screens/screens.dart';
 
 class MagicCodeTeacherScreen extends StatefulWidget {
 
@@ -21,10 +24,14 @@ class _MagicCodeTeacherScreenState extends State<MagicCodeTeacherScreen> {
 
   @override
   void initState() {
-    firstCtrl.text  = '2';
-    secondCtrl.text = '1';
-    thirdCtrl.text  = '8';
-    fourthCtrl.text = '3';
+    final String magicNumber = Provider.of<GroupProvider>(context, listen: false)
+      .group
+      .magicNumber;
+
+    firstCtrl.text  = magicNumber[0];
+    secondCtrl.text = magicNumber[1];
+    thirdCtrl.text  = magicNumber[2];
+    fourthCtrl.text = magicNumber[3];
 
     super.initState();
   }
