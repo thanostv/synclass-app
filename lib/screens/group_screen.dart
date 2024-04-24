@@ -49,12 +49,30 @@ class _GroupScreenState extends State<GroupScreen> {
 
   late List<bool> actives = List.generate(days.length + 1, (i) => false);
 
-  final List<int> _selectedDays = [];
+  late GroupProvider groupProvider;
+
+  @override
+  void initState() {
+    groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    groupProvider.selectedDays.clear();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    groupProvider.groupNameTextCtrl.text = '';
+    groupProvider.alumnsNumberTextCtrl.text = '';
+    groupProvider.selectedDays.clear();
+    
+    super.dispose();
+  }
 
 
   @override
   Widget build(BuildContext context) {
-  final groupProvider = Provider.of<GroupProvider>(context);
+    final Map arguments = (ModalRoute.of(context)?.settings.arguments as Map?) ?? {};
+
+    final String? title = arguments['title'];
     
     return Scaffold(
       appBar: AppBar(),
@@ -65,11 +83,11 @@ class _GroupScreenState extends State<GroupScreen> {
                 const SizedBox(height: 20),
         
                 // Título Crea tu primer grupo
-                const SizedBox(
+                SizedBox(
                   width: double.infinity,
                   child: Text(
-                    'Crea tu primer grupo',
-                    style: TextStyle(
+                    title ?? 'Crea tu primer grupo',
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -180,6 +198,8 @@ class _GroupScreenState extends State<GroupScreen> {
                             
                                       state.didChange(groupProvider.selectedDays);
                                     });
+
+                                    print(groupProvider.selectedDays);
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(8),
@@ -251,8 +271,6 @@ class _GroupScreenState extends State<GroupScreen> {
                         if(groupProvider.validateGroup()) {  
                           Navigator.pushNamed(context, 'alumns');
                         }
-                        // Navigator.pushNamed(context, 'alumns');
-                        // Navigator.pushNamedAndRemoveUntil(context, 'alumns', (route) => false);
                       },
                       style: const ButtonStyle(
                         elevation: MaterialStatePropertyAll(0),

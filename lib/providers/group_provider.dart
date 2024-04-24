@@ -44,7 +44,7 @@ class GroupProvider extends ChangeNotifier {
       'initial_date': DateFormat('yyyy-MM-dd').format(initialDate),
       'final_date': DateFormat('yyyy-MM-dd').format(finalDate),
       'alumns_amount': int.parse(alumnsNumberTextCtrl.text),
-      'teacher_id': user?.teacherId ?? 1,
+      'teacher_id': user!.teacherId,
       'days': selectedDays,
       'alumns': alumnsList,
     };
@@ -55,5 +55,4 @@ class GroupProvider extends ChangeNotifier {
 
     return response.data;
   }
-
 }

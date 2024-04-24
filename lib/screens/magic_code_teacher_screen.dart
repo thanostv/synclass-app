@@ -84,8 +84,7 @@ class _MagicCodeTeacherScreenState extends State<MagicCodeTeacherScreen> {
   
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, 'tabs');
-                // Navigator.pushNamedAndRemoveUntil(context, 'dashboard', (route) => false);
+                Navigator.pushNamedAndRemoveUntil(context, 'tabs', (route) => false);
               },
               style: const ButtonStyle(
                 elevation: MaterialStatePropertyAll(0),
